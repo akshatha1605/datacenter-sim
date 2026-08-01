@@ -116,8 +116,9 @@ datacenter-sim/
 ├── monitor/                      # Crash detection
 │   └── crash_watch.py            # Health check loop — saves logs on crash
 │
-├── monitoring/                   # Grafana dashboards
-│   └── dashboards/*.json
+├── monitoring/grafana/           # Grafana provisioning + dashboards
+│   ├── provisioning/             # datasource + dashboard provider YAML
+│   └── dashboards/load-test.json
 │
 ├── analysis/                     # Analysis and reporting
 │   ├── analyse.py                # Bottleneck detection, SLA verdict, PDF output
@@ -297,14 +298,15 @@ No code changes needed — just add workers.
 
 ## Monitoring
 
-While a test runs, open Grafana at http://localhost:3000 to see live panels for:
+While a test runs, open Grafana at http://localhost:3000 (login `admin` / `admin`).
+The **Datacenter Sim → Load Test** dashboard is auto-provisioned and shows:
 
 - Requests per second
-- p95 login latency
-- Error rate
-- CPU utilisation
+- p95 login latency (SLA line at 500ms)
+- Error rate (SLA line at 1%)
+- CPU utilisation (SLA line at 80%)
 - Memory utilisation
-- Active concurrent users
+- Active sessions and login success/failure rates
 
 Prometheus raw metrics are available at http://localhost:9090.
 
